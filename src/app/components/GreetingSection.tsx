@@ -47,7 +47,7 @@ export function GreetingSection() {
           <span className="font-semibold text-gray-800 ml-2">성민</span>
         </div>
         <div className="flex justify-center items-center space-x-2 text-lg">
-          <span className="font-semibold text-gray-800">이동국 · 최수진</span>
+          <span className="font-semi  bold text-gray-800">이동국 · 최수진</span>
           <span className="text-sm text-gray-500">의 차녀</span>
           <span className="font-semibold text-gray-800 ml-2">지은</span>
         </div>
