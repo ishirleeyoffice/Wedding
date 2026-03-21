@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 import { projectId, publicAnonKey } from "../../../utils/supabase/info";
+import React from "react";
 
 export function RsvpSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);

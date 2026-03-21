@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { MapPin, Phone, Car, Train } from "lucide-react";
+import React from "react";
 
 export function LocationSection() {
   return (

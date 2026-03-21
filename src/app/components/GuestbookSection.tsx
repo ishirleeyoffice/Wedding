@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, Menu, PenLine } from "lucide-react";
 import { toast } from "sonner";
 import { projectId, publicAnonKey } from "../../../utils/supabase/info";
+import React from "react";
 
 interface GuestbookEntry {
   id: string;

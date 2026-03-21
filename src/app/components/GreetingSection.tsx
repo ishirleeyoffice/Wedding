@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import React from "react";
 
 export function GreetingSection() {
   return (

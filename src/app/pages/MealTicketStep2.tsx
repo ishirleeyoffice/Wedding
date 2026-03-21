@@ -90,6 +90,8 @@ export function MealTicketStep2() {
           <p className="text-sm text-gray-500 mb-1">단계2</p>
           <h2 className="text-lg font-medium text-green-600 mb-4">축의금 송금 수단 선택</h2>
 
+       
+
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="w-full grid grid-cols-2 mb-4 bg-gray-100 p-1 rounded-xl">
               <TabsTrigger value="groom" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">
@@ -115,6 +117,13 @@ export function MealTicketStep2() {
             <span aria-hidden>*</span>
             5만원 이상만 식권 발급 가능
           </p>
+
+          <div className="space-y-3">
+          <h2 className="text-xl font-medium font-['Noto_Serif_KR'] text-gray-800">
+          참석이 어려우신 분들은 계좌이체만 진행 하시고 <br/> 본 화면 이탈 하셔도 됩니다.
+          </h2>
+          </div>
+          
         </main>
 
         <div className="fixed bottom-0 left-0 right-0 mx-auto w-full max-w-[480px] p-4 bg-white border-t border-gray-100 flex gap-3">

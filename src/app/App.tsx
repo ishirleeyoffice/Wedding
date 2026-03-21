@@ -1,6 +1,7 @@
 import React from "react";
 import { HeroSection } from "./components/HeroSection";
 import { GreetingSection } from "./components/GreetingSection";
+import MaterialRequestSection from "./components/MaterialRequestSection";
 import { GallerySection } from "./components/GallerySection";
 import { LocationSection } from "./components/LocationSection";
 import { AccountSection } from "./components/AccountSection";
@@ -20,16 +21,17 @@ export default function App() {
         <main>
           <HeroSection />
           <GreetingSection />
+          <AccountSection />
+          <MaterialRequestSection />
           <GallerySection />
           <LocationSection />
-          <AccountSection />
-          <GuestbookSection />
           <RsvpSection />
+          <GuestbookSection />
         </main>
         
         <footer className="py-8 text-center text-xs text-gray-400 bg-[#FAF9F8] border-t border-gray-100 font-sans">
           <p>© 2026 Sungmin & Jieun.</p>
-          <p className="mt-1">Created with Figma Make</p>
+          <p className="mt-1">Created by SHIRLEY</p>
         </footer>
       </div>
     </div>

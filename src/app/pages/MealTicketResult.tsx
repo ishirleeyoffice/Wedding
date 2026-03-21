@@ -55,11 +55,10 @@ export function MealTicketResult() {
 
         <main className="px-6 py-10 flex-1 pb-28 text-center">
           <div className="space-y-1 mb-6">
-            <p className="text-lg font-semibold text-gray-900">감사합니다.</p>
             <p className="text-base font-medium text-gray-900">
-              신랑OOO, 신부OOO
+              신랑 김성민, 신부 이지은
             </p>
-            <p className="text-base font-semibold text-gray-900">12:00pm</p>
+            <p className="text-base font-medium text-gray-900"> 2026년 5월 24일 토요일 오후 1시</p>
           </div>
 
           <div className="mx-auto w-64 h-64 bg-white border-2 border-gray-300 flex items-center justify-center">
@@ -89,11 +88,7 @@ export function MealTicketResult() {
             )}
           </div>
 
-          <p className="text-xs text-gray-500 mt-6 leading-relaxed">
-            * (필수) 자동으로 저장됨
-            <br />
-            * 하객 아이콘은 예식장 입장 시 사용
-          </p>
+        
         </main>
 
         <div className="fixed bottom-0 left-0 right-0 mx-auto w-full max-w-[480px] p-4 bg-white border-t border-gray-100">

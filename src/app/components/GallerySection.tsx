@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import React from "react";
 
 const photos = [
   "https://images.unsplash.com/photo-1660294502608-d65e5c62f244?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrb3JlYW4lMjB3ZWRkaW5nJTIwY291cGxlfGVufDF8fHx8MTc3Mjg0MzE2M3ww&ixlib=rb-4.1.0&q=80&w=1080",

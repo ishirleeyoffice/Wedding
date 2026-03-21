@@ -9,29 +9,64 @@ import { projectId, publicAnonKey } from "../../../utils/supabase/info";
 
 const SERVER_URL = `https://${projectId}.supabase.co/functions/v1/make-server-b8ec7463/meal-ticket/guest`;
 
+// 전화번호 포맷 함수: 숫자만 추출 후 010-XXXX-XXXX 형식으로
+function formatPhone(raw: string): string {
+  // 숫자만 추출
+  const digits = raw.replace(/\D/g, "");
+  // 최대 11자리
+  const limited = digits.slice(0, 11);
+
+  if (limited.length <= 3) return limited;
+  if (limited.length <= 7) return `${limited.slice(0, 3)}-${limited.slice(3)}`;
+  return `${limited.slice(0, 3)}-${limited.slice(3, 7)}-${limited.slice(7)}`;
+}
+
+// 포맷된 번호에서 숫자 개수 (하이픈 제외)
+function digitCount(formatted: string): number {
+  return formatted.replace(/\D/g, "").length;
+}
+
 export function MealTicketStep1() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("010-"); // 010- 기본값
   const [isLoading, setIsLoading] = useState(false);
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+
+    // 사용자가 "010-" 앞부분 지우지 못하게
+    const digits = raw.replace(/\D/g, "");
+    if (!digits.startsWith("010")) {
+      setPhone("010-");
+      return;
+    }
+
+    const formatted = formatPhone(digits);
+    setPhone(formatted);
+  };
+
+  // 완성된 번호인지 (11자리: 010-XXXX-XXXX)
+  const isPhoneComplete = digitCount(phone) === 11;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedName = name.trim();
     const trimmedPhone = phone.trim();
+
     if (!trimmedName) {
       toast.error("이름을 입력해주세요.", {
         style: { background: "#333", color: "#fff", border: "none", fontFamily: "'Gowun Dodum', sans-serif" },
       });
       return;
     }
-    if (!trimmedPhone) {
-      toast.error("핸드폰 번호를 입력해주세요.", {
+    if (!trimmedPhone || !isPhoneComplete) {
+      toast.error("핸드폰 번호를 끝까지 입력해주세요.", {
         style: { background: "#333", color: "#fff", border: "none", fontFamily: "'Gowun Dodum', sans-serif" },
       });
       return;
     }
-    // 다음 화면(식권 선택/QR 결과)에서 표시할 기본 정보 저장
+
     try {
       sessionStorage.setItem(
         "meal_ticket_guest",
@@ -56,14 +91,12 @@ export function MealTicketStep1() {
           style: { background: "#333", color: "#fff", border: "none", fontFamily: "'Gowun Dodum', sans-serif" },
         });
       } else {
-        // API 미배포 또는 서버 오류 시: 안내 후 다음 단계로 진행
         toast.warning("서버에 저장되지 않았을 수 있습니다. 다음 단계로 이동합니다.", {
           style: { background: "#333", color: "#fff", border: "none", fontFamily: "'Gowun Dodum', sans-serif" },
         });
       }
       navigate("/meal-ticket/transfer");
     } catch {
-      // 네트워크 오류 등: 안내 후 다음 단계로 진행 (배포 전에도 플로우 사용 가능)
       toast.warning("서버에 연결할 수 없습니다. 다음 단계로 이동합니다.", {
         style: { background: "#333", color: "#fff", border: "none", fontFamily: "'Gowun Dodum', sans-serif" },
       });
@@ -96,6 +129,7 @@ export function MealTicketStep1() {
           <h2 className="text-lg font-medium text-green-600 mb-6">하객 정보 입력</h2>
 
           <form onSubmit={handleSubmit} className="space-y-5">
+            {/* 이름 */}
             <div className="space-y-2">
               <Label htmlFor="name" className="text-gray-700">
                 이름
@@ -109,6 +143,8 @@ export function MealTicketStep1() {
                 className="w-full rounded-xl border-gray-200 bg-gray-50 h-12"
               />
             </div>
+
+            {/* 핸드폰 번호 */}
             <div className="space-y-2">
               <Label htmlFor="phone" className="text-gray-700">
                 핸드폰 번호
@@ -116,12 +152,30 @@ export function MealTicketStep1() {
               <Input
                 id="phone"
                 type="tel"
+                inputMode="numeric"         // 모바일 숫자 키패드
+                autoComplete="tel"          // 핸드폰 번호 자동완성 허용
                 placeholder="010-0000-0000"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full rounded-xl border-gray-200 bg-gray-50 h-12"
+                onChange={handlePhoneChange}
+                maxLength={13}              // 010-0000-0000 = 13자
+                className="w-full rounded-xl border-gray-200 bg-gray-50 h-12 tracking-widest"
               />
+              {/* 번호 입력 가이드 */}
+              <p className="text-xs text-gray-400 pl-1">
+                숫자만 입력하면 자동으로 - 가 추가됩니다
+              </p>
             </div>
+
+            {/* ✅ 번호 완성 시 재확인 표시 */}
+            {isPhoneComplete && (
+              <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-xl px-4 py-3">
+                <span className="text-green-500 text-lg">✓</span>
+                <div>
+                  <p className="text-xs text-green-600 font-medium mb-0.5">입력하신 번호가 맞나요?</p>
+                  <p className="text-base font-bold text-gray-800 tracking-widest">{phone}</p>
+                </div>
+              </div>
+            )}
 
             <button
               type="submit"
